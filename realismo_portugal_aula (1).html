@@ -1,0 +1,1166 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Realismo em Portugal — Aula Completa</title>
+<style>
+  :root {
+    --bg: #18181500;
+    --bg2: #222220;
+    --bg3: #2c2c28;
+    --text: #e4dfc8;
+    --muted: #a09880;
+    --gold: #c9a43e;
+    --gold-light: #e8c96a;
+    --green: #5aad70;
+    --red: #c95a5a;
+    --border: rgba(201,164,62,0.25);
+    --extra: #3a3020;
+    --extra-border: #7a6030;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: #1c1c18;
+    color: var(--text);
+    font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, Georgia, serif;
+    font-size: 17px;
+    line-height: 1.8;
+  }
+
+  /* NAV */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(20,20,16,0.97);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    display: flex; align-items: center; gap: 0; overflow-x: auto;
+    backdrop-filter: blur(8px);
+  }
+  nav a {
+    color: var(--muted); text-decoration: none;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 12px; font-weight: 500; letter-spacing: 0.04em;
+    padding: 14px 16px; white-space: nowrap; border-bottom: 2px solid transparent;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  nav a:hover { color: var(--gold); border-bottom-color: var(--gold); }
+  nav .nav-logo {
+    color: var(--gold); font-size: 13px; font-weight: 600;
+    letter-spacing: 0.08em; margin-right: 1rem; padding-right: 1rem;
+    border-right: 1px solid var(--border); white-space: nowrap;
+  }
+
+  /* COVER */
+  .cover {
+    min-height: 92vh;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; padding: 4rem 2rem;
+    background: radial-gradient(ellipse at 50% 60%, rgba(201,164,62,0.07) 0%, transparent 70%);
+    position: relative; overflow: hidden;
+  }
+  .cover-flag { display: flex; gap: 8px; align-items: center; margin-bottom: 2.5rem; }
+  .flag-stripe { height: 6px; border-radius: 3px; }
+  .cover h1 {
+    font-size: clamp(2.4rem, 6vw, 4.2rem);
+    font-weight: normal; letter-spacing: 0.04em;
+    color: var(--text); line-height: 1.15; margin-bottom: 1rem;
+  }
+  .cover h1 em { color: var(--green); font-style: normal; }
+  .cover h1 strong { color: var(--red); font-weight: normal; }
+  .cover-sub {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 14px; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 3.5rem;
+  }
+  .cover-toc {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem; max-width: 800px; width: 100%; text-align: left;
+  }
+  .toc-item {
+    background: rgba(201,164,62,0.07); border: 1px solid var(--border);
+    border-radius: 10px; padding: 1rem 1.2rem;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 13px; color: var(--muted);
+    transition: background 0.2s, color 0.2s; cursor: default;
+  }
+  .toc-item span { display: block; color: var(--gold); font-weight: 600; font-size: 11px; margin-bottom: 4px; letter-spacing: 0.06em; }
+
+  /* SECTIONS */
+  section {
+    max-width: 900px; margin: 0 auto; padding: 5rem 2rem;
+    border-bottom: 1px solid rgba(201,164,62,0.12);
+  }
+  .section-tag {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 1rem; display: block;
+  }
+  h2 {
+    font-size: clamp(1.7rem, 4vw, 2.5rem);
+    font-weight: normal; color: var(--text); margin-bottom: 0.5rem; line-height: 1.2;
+  }
+  .section-line {
+    height: 1px; background: linear-gradient(90deg, var(--gold) 0%, transparent 60%);
+    margin-bottom: 2.5rem;
+  }
+  h3 {
+    font-size: 1.25rem; font-weight: normal; color: var(--gold-light);
+    margin: 2.5rem 0 1rem;
+  }
+  p { margin-bottom: 1.2rem; }
+  strong { color: var(--gold-light); font-weight: 600; }
+  em { color: var(--green); font-style: italic; }
+
+  /* CARDS & BOXES */
+  .card {
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: 12px; padding: 1.5rem 2rem; margin: 1.5rem 0;
+  }
+  .card-title {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 1rem;
+  }
+  .highlight-box {
+    border-left: 3px solid var(--gold); padding: 1rem 1.5rem;
+    background: rgba(201,164,62,0.06); border-radius: 0 8px 8px 0; margin: 1.5rem 0;
+  }
+  .extra-box {
+    background: var(--extra); border: 1px solid var(--extra-border);
+    border-radius: 10px; padding: 1.2rem 1.5rem; margin: 2rem 0;
+  }
+  .extra-tag {
+    display: inline-block;
+    background: var(--extra-border); color: #e8c96a;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 2px 8px; border-radius: 4px; margin-bottom: 0.7rem;
+  }
+
+  /* GRID LAYOUTS */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin: 2rem 0; }
+  .three-col { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; margin: 2rem 0; }
+  @media (max-width: 680px) {
+    .two-col, .three-col { grid-template-columns: 1fr; }
+  }
+
+  /* PHILOSOPHY CONCEPTS */
+  .concept-row {
+    display: flex; align-items: flex-start; gap: 1rem; margin: 1.2rem 0;
+    padding: 1rem 1.2rem; background: var(--bg2); border-radius: 8px;
+    border: 1px solid rgba(201,164,62,0.15);
+  }
+  .concept-icon {
+    width: 36px; height: 36px; border-radius: 50%; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 15px;
+  }
+  .concept-text h4 { font-size: 1rem; color: var(--gold-light); margin-bottom: 0.3rem; }
+  .concept-text p { margin: 0; font-size: 0.9rem; color: var(--muted); }
+
+  /* POETRY */
+  .poem-wrapper {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; margin: 2rem 0;
+    align-items: start;
+  }
+  @media (max-width: 700px) { .poem-wrapper { grid-template-columns: 1fr; } }
+  .poem-box {
+    background: var(--bg3); border-left: 3px solid var(--gold);
+    padding: 1.5rem 1.8rem; border-radius: 0 10px 10px 0;
+  }
+  .poem-title {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 1.2rem;
+  }
+  .poem-box p {
+    font-size: 1rem; line-height: 1.9; color: #d0c8b0;
+    margin-bottom: 0; font-style: italic;
+  }
+  .poem-stanza { margin-bottom: 1rem; }
+  .analysis-box { background: var(--bg2); border-radius: 10px; padding: 1.5rem; }
+  .analysis-box h4 {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 1rem;
+  }
+  .analysis-item {
+    display: flex; gap: 0.7rem; margin-bottom: 0.8rem; align-items: flex-start;
+  }
+  .analysis-dot {
+    width: 8px; height: 8px; border-radius: 50%; background: var(--gold);
+    margin-top: 8px; flex-shrink: 0;
+  }
+  .analysis-item p { margin: 0; font-size: 0.9rem; }
+
+  /* COMPARISON TABLE */
+  .compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin: 2rem 0; }
+  .compare-col-head {
+    text-align: center; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.7rem;
+    border-radius: 8px 8px 0 0; color: #fff; font-weight: 600;
+  }
+  .compare-cell {
+    background: var(--bg3); border: 1px solid var(--border); padding: 1rem 1.2rem;
+    font-size: 0.92rem; border-radius: 0 0 8px 8px;
+  }
+
+  /* TIMELINE */
+  .timeline { position: relative; padding-left: 2rem; margin: 2rem 0; }
+  .timeline::before {
+    content: ''; position: absolute; left: 7px; top: 0; bottom: 0;
+    width: 2px; background: linear-gradient(180deg, var(--gold), transparent);
+  }
+  .tl-item { position: relative; margin-bottom: 2rem; }
+  .tl-dot {
+    position: absolute; left: -2rem; top: 6px;
+    width: 14px; height: 14px; border-radius: 50%;
+    background: var(--gold); border: 2px solid #1c1c18;
+  }
+  .tl-year {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 11px; font-weight: 700; letter-spacing: 0.1em; color: var(--gold);
+    margin-bottom: 0.3rem;
+  }
+  .tl-title { font-size: 1.05rem; color: var(--text); margin-bottom: 0.3rem; }
+  .tl-desc { font-size: 0.9rem; color: var(--muted); }
+
+  /* BADGE */
+  .badge {
+    display: inline-block; padding: 3px 10px; border-radius: 20px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 11px; font-weight: 600; letter-spacing: 0.05em;
+  }
+  .badge-gold { background: rgba(201,164,62,0.2); color: var(--gold); border: 1px solid rgba(201,164,62,0.4); }
+  .badge-green { background: rgba(90,173,112,0.2); color: var(--green); border: 1px solid rgba(90,173,112,0.4); }
+  .badge-red { background: rgba(201,90,90,0.2); color: var(--red); border: 1px solid rgba(201,90,90,0.4); }
+
+  /* FACE CARDS */
+  .face-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin: 2rem 0; }
+  .face-card { border-radius: 12px; padding: 1.8rem; }
+  .face-dark { background: rgba(100,50,50,0.2); border: 1px solid rgba(201,90,90,0.3); }
+  .face-light { background: rgba(50,100,70,0.2); border: 1px solid rgba(90,173,112,0.3); }
+  .face-label {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+    font-weight: 700; margin-bottom: 1rem;
+  }
+  .face-dark .face-label { color: var(--red); }
+  .face-light .face-label { color: var(--green); }
+
+  /* DEBATE */
+  .debate-grid { display: grid; grid-template-columns: 1fr auto 1fr; gap: 1.5rem; align-items: center; margin: 2rem 0; }
+  .debate-card { background: var(--bg2); border-radius: 12px; padding: 1.5rem; }
+  .debate-vs {
+    font-size: 2rem; color: var(--gold); text-align: center;
+    font-weight: bold; opacity: 0.6;
+  }
+  @media (max-width: 600px) {
+    .debate-grid { grid-template-columns: 1fr; }
+    .debate-vs { display: none; }
+  }
+
+  /* PORTRAIT */
+  .portrait-circle {
+    width: 70px; height: 70px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 2rem; margin-bottom: 1rem;
+    border: 2px solid;
+  }
+
+  /* FOOTER */
+  footer {
+    text-align: center; padding: 3rem; color: var(--muted);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 12px;
+    border-top: 1px solid var(--border);
+  }
+  footer strong { color: var(--gold); }
+
+  /* SCROLL REVEAL ANIMATION */
+  .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.6s, transform 0.6s; }
+  .revealed { opacity: 1; transform: translateY(0); }
+
+  /* QUIZ BOX */
+  .quiz-box {
+    background: var(--bg2); border: 2px dashed rgba(201,164,62,0.3);
+    border-radius: 12px; padding: 1.8rem; margin: 2rem 0;
+  }
+  .quiz-box h4 {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 13px; font-weight: 600; color: var(--gold); margin-bottom: 1rem;
+    letter-spacing: 0.06em; text-transform: uppercase;
+  }
+  .quiz-q { margin-bottom: 0.8rem; font-size: 0.92rem; }
+  .quiz-q span { color: var(--gold); margin-right: 6px; font-weight: bold; }
+</style>
+</head>
+<body>
+
+<!-- NAVIGATION -->
+<nav>
+  <span class="nav-logo">Realismo em Portugal</span>
+  <a href="#schopenhauer">Schopenhauer</a>
+  <a href="#contexto">Contexto</a>
+  <a href="#inicio">Questão Coimbrã</a>
+  <a href="#autores">Autores</a>
+  <a href="#antero">Antero de Quental</a>
+  <a href="#hino">Hino à Razão</a>
+  <a href="#males">Só Males</a>
+  <a href="#comparacao">Comparação</a>
+  <a href="#eca">Eça de Queirós</a>
+</nav>
+
+<!-- COVER -->
+<div class="cover">
+  <div class="cover-flag">
+    <div class="flag-stripe" style="width:90px;background:#5aad70;"></div>
+    <div class="flag-stripe" style="width:60px;background:#c95a5a;"></div>
+  </div>
+  <div class="cover-sub">Literatura Portuguesa · 2º Ano do Ensino Médio</div>
+  <h1>Realismo em <em>Por</em><strong>tugal</strong></h1>
+  <p style="max-width:560px;color:var(--muted);margin-bottom:3rem;font-size:1rem;">
+    Uma jornada completa pela filosofia, pela história e pela poesia que transformaram Portugal — da visão sombria de Schopenhauer aos versos rebeldes de Antero de Quental.
+  </p>
+  <div class="cover-toc">
+    <div class="toc-item"><span>Parte I</span>A base filosófica: Schopenhauer</div>
+    <div class="toc-item"><span>Parte II</span>Contexto histórico de Portugal</div>
+    <div class="toc-item"><span>Parte III</span>O início do Realismo</div>
+    <div class="toc-item"><span>Parte IV</span>Antero de Quental e a poesia</div>
+    <div class="toc-item"><span>Parte V</span>As duas faces do poeta</div>
+    <div class="toc-item"><span>Parte VI</span>Eça de Queirós e a prosa</div>
+  </div>
+</div>
+
+<!-- EXTRA: O QUE É O REALISMO? -->
+<section>
+  <div class="extra-box reveal">
+    <div class="extra-tag">⚡ Conteúdo Extra — não estava no PPT, usado para melhor compreensão</div>
+    <h3 style="margin-top:0.5rem;">O que é o Realismo? (Contexto geral)</h3>
+    <p>Antes de falar do Realismo <em>em Portugal</em>, é importante entender o que é o Realismo como movimento literário e por que ele surgiu.</p>
+    <p>Após o Romantismo — que valorizava a emoção exagerada, a fantasia, o escapismo, os heróis perfeitos e os sentimentos idealizados — surgiu uma nova corrente que disse: <strong>"chega de ilusão, vamos olhar para a realidade como ela é."</strong></p>
+    <div class="two-col" style="margin-top:1.5rem;">
+      <div class="card">
+        <div class="card-title">🌹 Romantismo (antes)</div>
+        <p style="font-size:0.92rem;">Sentimentos exaltados, amor idealizado, natureza como espelho da alma, herói nobre e perfeito, evasão da realidade, subjetivismo.</p>
+      </div>
+      <div class="card">
+        <div class="card-title">🔬 Realismo (depois)</div>
+        <p style="font-size:0.92rem;">Crítica social, personagens comuns com defeitos, linguagem objetiva, influência da ciência, retrato fiel da sociedade burguesa.</p>
+      </div>
+    </div>
+    <p>O Realismo nasce na Europa em meados do século XIX, impulsionado pelo positivismo científico de Auguste Comte, pelo evolucionismo de Charles Darwin e pela Revolução Industrial. Em Portugal, chegou um pouco mais tarde — e com um sabor muito próprio.</p>
+  </div>
+</section>
+
+<!-- SECTION 1: SCHOPENHAUER -->
+<section id="schopenhauer">
+  <span class="section-tag reveal">Parte I — A Influência Filosófica</span>
+  <h2 class="reveal">Arthur Schopenhauer</h2>
+  <div class="section-line reveal"></div>
+
+  <div class="highlight-box reveal">
+    <p style="font-size:1.15rem;font-style:italic;color:var(--gold-light);">"Quanto mais claro é o conhecimento do homem, quanto mais inteligente ele é, mais sofrimento ele tem."</p>
+    <p style="margin:0;font-size:0.88rem;color:var(--muted);">— Arthur Schopenhauer (1788–1860)</p>
+  </div>
+
+  <p class="reveal">Para entender o Realismo português, é fundamental conhecer <strong>Arthur Schopenhauer</strong>, filósofo alemão que viveu entre 1788 e 1860. Sua filosofia influenciou profundamente os escritores realistas — especialmente Antero de Quental.</p>
+
+  <h3 class="reveal">Quem era Schopenhauer?</h3>
+  <p class="reveal">Era um filósofo radicalmente diferente dos pensadores de sua época, que eram otimistas e acreditavam no progresso humano. Schopenhauer foi o <strong>grande filósofo do pessimismo</strong> — e isso soava como uma bomba no século XIX.</p>
+
+  <div class="extra-box reveal">
+    <div class="extra-tag">⚡ Conteúdo Extra</div>
+    <p>Schopenhauer era famoso por sua arrogância — ele chegou a marcar suas aulas na mesma hora que Hegel, o filósofo mais famoso da época, para competir com ele. A sala de Hegel ficou cheia; a de Schopenhauer, vazia. Ironicamente, hoje Schopenhauer é muito mais lido que Hegel. Isso nos diz algo sobre a ideia dele de que a vida é injusta e cheia de frustrações…</p>
+  </div>
+
+  <h3 class="reveal">As ideias principais de Schopenhauer</h3>
+
+  <div class="concept-row reveal">
+    <div class="concept-icon" style="background:rgba(201,90,90,0.2);border:1px solid rgba(201,90,90,0.4);">😞</div>
+    <div class="concept-text">
+      <h4>A vida é sofrimento contínuo</h4>
+      <p>A existência humana é marcada pela dor. O sofrimento não é exceção — é a regra. Prazeres são apenas pausas breves em um mar de insatisfação.</p>
+    </div>
+  </div>
+  <div class="concept-row reveal">
+    <div class="concept-icon" style="background:rgba(201,164,62,0.2);border:1px solid rgba(201,164,62,0.4);">🎭</div>
+    <div class="concept-text">
+      <h4>A Arte como único alívio momentâneo</h4>
+      <p>A única saída temporária do sofrimento é a contemplação artística. Quando você se perde numa música ou num poema, sua "vontade" descansa por um instante. Só por um instante.</p>
+    </div>
+  </div>
+  <div class="concept-row reveal">
+    <div class="concept-icon" style="background:rgba(90,173,112,0.2);border:1px solid rgba(90,173,112,0.4);">🌊</div>
+    <div class="concept-text">
+      <h4>A Vontade (o mal maior — conceito metafísico)</h4>
+      <p>Existe uma força cega, universal e insaciável chamada <strong>Vontade</strong>. Ela domina tudo: humanos, animais, a natureza. Você deseja comer, dormir, ter amor, ter sucesso — isso tudo é a Vontade te controlando. E ela nunca está satisfeita.</p>
+    </div>
+  </div>
+  <div class="concept-row reveal">
+    <div class="concept-icon" style="background:rgba(120,90,180,0.2);border:1px solid rgba(120,90,180,0.4);">💘</div>
+    <div class="concept-text">
+      <h4>O Amor e a Vontade "cega"</h4>
+      <p>Amor não existe para sua felicidade — existe para que a espécie se reproduza. A Vontade usa você para se perpetuar. Amantes se arriscam e até morrem por desejo, porque o instinto de reprodução é tão forte quanto o medo da morte.</p>
+    </div>
+  </div>
+  <div class="concept-row reveal">
+    <div class="concept-icon" style="background:rgba(60,60,60,0.4);border:1px solid rgba(150,150,150,0.3);">🌑</div>
+    <div class="concept-text">
+      <h4>Tudo é ilusão — correlação com Platão</h4>
+      <p>O mundo que percebemos pelos sentidos não é a realidade verdadeira — é uma ilusão, uma aparência. Schopenhauer retoma a ideia de Platão (o Mundo das Sombras) mas com um olhar ainda mais sombrio: por trás da ilusão não está o Bem, mas a Vontade maligna.</p>
+    </div>
+  </div>
+  <div class="concept-row reveal">
+    <div class="concept-icon" style="background:rgba(201,164,62,0.15);border:1px solid rgba(201,164,62,0.3);">🍃</div>
+    <div class="concept-text">
+      <h4>O Nirvana — libertação da Vontade</h4>
+      <p>Influenciado pelo budismo, Schopenhauer via o <em>nirvana</em> (extinção dos desejos) como a única forma de escapar do sofrimento. Ao negar a Vontade, o ser humano se liberta.</p>
+    </div>
+  </div>
+  <div class="concept-row reveal">
+    <div class="concept-icon" style="background:rgba(80,40,40,0.4);border:1px solid rgba(150,80,80,0.4);">⚠️</div>
+    <div class="concept-text">
+      <h4>Niilismo e a "triste natureza humana"</h4>
+      <p>Mesmo no caráter mais nobre, há sempre algum traço de maldade. A espécie humana é absurda. A "felicidade" é apenas ilusão — só o sofrimento é real, pois é fácil de sentir.</p>
+    </div>
+  </div>
+
+  <div class="card reveal" style="margin-top:2.5rem;">
+    <div class="card-title">📚 Principal obra</div>
+    <p style="font-size:1.1rem;color:var(--gold-light);font-style:italic;margin-bottom:0.5rem;">O mundo como vontade e representação</p>
+    <p style="font-size:0.9rem;color:var(--muted);">Publicado em 1818, quando Schopenhauer tinha apenas 30 anos. A obra foi ignorada por décadas. Mais tarde, influenciou Nietzsche, Freud, Einstein, Wagner e os escritores realistas portugueses.</p>
+  </div>
+
+  <!-- DIAGRAM: Schopenhauer concept map -->
+  <div class="reveal" style="margin:2.5rem 0;">
+    <svg width="100%" viewBox="0 0 680 340" role="img">
+      <title>Mapa de conceitos de Schopenhauer</title>
+      <desc>Diagrama mostrando a Vontade no centro, conectada a sofrimento, ilusão, arte, nirvana e niilismo</desc>
+      <defs>
+        <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </marker>
+      </defs>
+      <!-- Center node: A Vontade -->
+      <rect x="258" y="130" width="164" height="50" rx="10" fill="rgba(201,90,90,0.25)" stroke="rgba(201,90,90,0.6)" stroke-width="1"/>
+      <text x="340" y="150" text-anchor="middle" dominant-baseline="central" font-family="Palatino,serif" font-size="14" fill="#e4907a">A Vontade</text>
+      <text x="340" y="168" text-anchor="middle" dominant-baseline="central" font-family="-apple-system,sans-serif" font-size="11" fill="#a08080">(o mal maior)</text>
+
+      <!-- Sofrimento -->
+      <rect x="40" y="30" width="140" height="44" rx="8" fill="rgba(80,40,40,0.4)" stroke="rgba(180,80,80,0.4)" stroke-width="0.5"/>
+      <text x="110" y="52" text-anchor="middle" dominant-baseline="central" font-family="-apple-system,sans-serif" font-size="13" fill="#d09090">Sofrimento contínuo</text>
+      <line x1="258" y1="147" x2="180" y2="62" stroke="#c07070" stroke-width="1" marker-end="url(#arr)" opacity="0.7"/>
+
+      <!-- Ilusão -->
+      <rect x="40" y="148" width="130" height="44" rx="8" fill="rgba(60,60,80,0.4)" stroke="rgba(100,100,160,0.4)" stroke-width="0.5"/>
+      <text x="105" y="170" text-anchor="middle" dominant-baseline="central" font-family="-apple-system,sans-serif" font-size="13" fill="#a0a0d0">Mundo é ilusão</text>
+      <line x1="258" y1="155" x2="170" y2="165" stroke="#8080b0" stroke-width="1" marker-end="url(#arr)" opacity="0.7"/>
+
+      <!-- Amor / Reprodução -->
+      <rect x="40" y="248" width="140" height="44" rx="8" fill="rgba(80,50,80,0.4)" stroke="rgba(160,80,160,0.4)" stroke-width="0.5"/>
+      <text x="110" y="270" text-anchor="middle" dominant-baseline="central" font-family="-apple-system,sans-serif" font-size="13" fill="#c090c0">Amor = vontade cega</text>
+      <line x1="258" y1="168" x2="180" y2="268" stroke="#a060a0" stroke-width="1" marker-end="url(#arr)" opacity="0.7"/>
+
+      <!-- Arte -->
+      <rect x="500" y="30" width="130" height="44" rx="8" fill="rgba(201,164,62,0.2)" stroke="rgba(201,164,62,0.4)" stroke-width="0.5"/>
+      <text x="565" y="52" text-anchor="middle" dominant-baseline="central" font-family="-apple-system,sans-serif" font-size="13" fill="#c9a43e">Arte = alívio breve</text>
+      <line x1="422" y1="147" x2="500" y2="62" stroke="#c9a43e" stroke-width="1" marker-end="url(#arr)" opacity="0.7"/>
+
+      <!-- Nirvana -->
+      <rect x="500" y="148" width="130" height="44" rx="8" fill="rgba(90,173,112,0.15)" stroke="rgba(90,173,112,0.4)" stroke-width="0.5"/>
+      <text x="565" y="170" text-anchor="middle" dominant-baseline="central" font-family="-apple-system,sans-serif" font-size="13" fill="#5aad70">Nirvana = liberdade</text>
+      <line x1="422" y1="155" x2="500" y2="165" stroke="#5aad70" stroke-width="1" marker-end="url(#arr)" opacity="0.7"/>
+
+      <!-- Niilismo -->
+      <rect x="500" y="248" width="130" height="44" rx="8" fill="rgba(60,60,60,0.5)" stroke="rgba(100,100,100,0.4)" stroke-width="0.5"/>
+      <text x="565" y="270" text-anchor="middle" dominant-baseline="central" font-family="-apple-system,sans-serif" font-size="13" fill="#909090">Niilismo</text>
+      <line x1="422" y1="168" x2="500" y2="268" stroke="#808080" stroke-width="1" marker-end="url(#arr)" opacity="0.7"/>
+
+      <!-- Label bottom -->
+      <text x="340" y="320" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="11" fill="#605850">Mapa conceitual — filosofia de Schopenhauer</text>
+    </svg>
+  </div>
+</section>
+
+<!-- SECTION 2: CONTEXTO HISTÓRICO -->
+<section id="contexto">
+  <span class="section-tag reveal">Parte II — A Realidade de Portugal</span>
+  <h2 class="reveal">O Contexto Histórico e Cultural</h2>
+  <div class="section-line reveal"></div>
+
+  <p class="reveal">Para entender por que o Realismo surgiu em Portugal, precisamos entender <strong>como era Portugal na segunda metade do século XIX</strong>. E a resposta é: muito diferente do resto da Europa.</p>
+
+  <div class="three-col reveal">
+    <div class="card" style="border-top:3px solid var(--red);">
+      <div class="card-title">⚙️ Estagnação</div>
+      <p style="font-size:0.9rem;">Tecnológica, econômica e científica. Portugal estava parado no tempo enquanto Inglaterra e França avançavam rapidamente com a Revolução Industrial.</p>
+    </div>
+    <div class="card" style="border-top:3px solid var(--red);">
+      <div class="card-title">🗺️ Atraso</div>
+      <p style="font-size:0.9rem;">O país estava claramente atrasado em relação ao restante da Europa. Isso gerava vergonha e frustração na elite intelectual portuguesa.</p>
+    </div>
+    <div class="card" style="border-top:3px solid rgba(201,164,62,0.7);">
+      <div class="card-title">⛪ Igreja Católica</div>
+      <p style="font-size:0.9rem;">A Igreja funcionava como um "poder paralelo" ao do Estado — e era vista pelos intelectuais como um entrave ao progresso, à ciência e à modernização.</p>
+    </div>
+  </div>
+
+  <div class="extra-box reveal">
+    <div class="extra-tag">⚡ Conteúdo Extra — para entender melhor o contexto</div>
+    <h3 style="margin-top:0.5rem;">Portugal vs. Europa: qual era a diferença?</h3>
+    <p>Enquanto Inglaterra tinha fábricas, locomotivas, telégrafos e uma classe média crescente, Portugal ainda era um país predominantemente agrário, com uma população majoritariamente analfabeta e uma Igreja que controlava a educação e a moralidade pública.</p>
+    <p>A elite intelectual portuguesa — jovens estudantes na Universidade de Coimbra — lia os filósofos e romancistas franceses (Flaubert, Zola, Proudhon) e se envergonhava do atraso do próprio país. Era um ambiente perfeito para o surgimento de um movimento crítico e reformista — o Realismo.</p>
+  </div>
+
+  <h3 class="reveal">A malha ferroviária: o símbolo da mudança</h3>
+  <p class="reveal">Entre 1860 e 1864, Portugal construiu sua rede ferroviária, conectando-se fisicamente com o restante da Europa. Esse dado, aparentemente técnico, tem um significado cultural enorme: <strong>as ideias também começaram a circular com mais velocidade.</strong> Jornais, livros e debates filosóficos franceses chegavam a Portugal — e a juventude universitária absorvia tudo isso com avidez.</p>
+
+  <div class="highlight-box reveal">
+    <p>A estrada de ferro não serviu apenas para transportar mercadorias. Ela transportou <strong>ideias revolucionárias</strong> que transformaram o pensamento da elite intelectual portuguesa.</p>
+  </div>
+
+  <!-- Timeline -->
+  <h3 class="reveal">Linha do tempo: o caminho para o Realismo português</h3>
+  <div class="timeline reveal">
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-year">1818</div>
+      <div class="tl-title">Schopenhauer publica <em>O mundo como vontade e representação</em></div>
+      <div class="tl-desc">A filosofia pessimista que vai marcar os poetas realistas portugueses.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-year">1848</div>
+      <div class="tl-title">Marx e Engels publicam o Manifesto Comunista</div>
+      <div class="tl-desc">O pensamento socialista começa a influenciar a intelectualidade europeia — incluindo os jovens portugueses.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-year">1860–1864</div>
+      <div class="tl-title">A malha ferroviária portuguesa</div>
+      <div class="tl-desc">Portugal se conecta fisicamente com o restante da Europa. Ideias circulam mais rapidamente.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot" style="background:var(--gold-light);"></div>
+      <div class="tl-year">1865</div>
+      <div class="tl-title">A Questão Coimbrã</div>
+      <div class="tl-desc">O grande debate entre o romantismo conservador e as novas ideias realistas. O estopim do movimento.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot" style="background:var(--gold-light);"></div>
+      <div class="tl-year">1870</div>
+      <div class="tl-title">Conferências do Cassino Lisbonense</div>
+      <div class="tl-desc">Série de palestras que visavam reformar a sociedade portuguesa através das ideias realistas.</div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 3: INÍCIO DAS IDEIAS REALISTAS -->
+<section id="inicio">
+  <span class="section-tag reveal">Parte III — O Início do Movimento</span>
+  <h2 class="reveal">O Início das Ideias Realistas</h2>
+  <div class="section-line reveal"></div>
+
+  <h3 class="reveal">1865 — A Questão Coimbrã</h3>
+  <p class="reveal">Tudo começa com uma briga literária na Universidade de Coimbra. O professor <strong>António Feliciano de Castilho</strong> publicou um texto chamado <em>"Bom senso e bom gosto"</em>, criticando a nova geração de escritores por escrever de um jeito "obscuro" e difícil de entender.</p>
+  <p class="reveal">A resposta veio de <strong>Antero de Quental</strong>, jovem e brilhante estudante. Ele contra-atacou com ferocidade, acusando Castilho de ser um poeta ultrapassado, preso ao Romantismo e à tradição. Esse confronto entrou para a história como a <em>Questão Coimbrã</em>.</p>
+
+  <div class="debate-grid reveal">
+    <div class="debate-card" style="border-top:3px solid var(--muted);">
+      <div class="portrait-circle" style="background:rgba(100,100,80,0.2);border-color:rgba(150,150,100,0.4);">👴</div>
+      <div style="font-size:1rem;color:var(--text);margin-bottom:0.5rem;font-weight:bold;">António Feliciano de Castilho</div>
+      <div class="badge badge-gold" style="margin-bottom:1rem;">O olhar romântico / retrógado</div>
+      <p style="font-size:0.9rem;color:var(--muted);">Professor respeitado, defensor do Romantismo. Via a nova geração com desprezo — achava que escreviam de modo complicado e sem respeitar as tradições.</p>
+    </div>
+    <div class="debate-vs">✕</div>
+    <div class="debate-card" style="border-top:3px solid var(--gold);">
+      <div class="portrait-circle" style="background:rgba(201,164,62,0.15);border-color:rgba(201,164,62,0.5);">✍️</div>
+      <div style="font-size:1rem;color:var(--text);margin-bottom:0.5rem;font-weight:bold;">Antero de Quental</div>
+      <div class="badge badge-green" style="margin-bottom:1rem;">Revolucionário / realista / contemporâneo</div>
+      <p style="font-size:0.9rem;color:var(--muted);">Jovem estudante genial, defensor das novas ideias filosóficas e políticas. Via o Romantismo como alienante e o queria substituir por uma literatura engajada.</p>
+    </div>
+  </div>
+
+  <div class="highlight-box reveal" style="margin-top:2rem;">
+    <p><strong>Por que isso é importante?</strong> A Questão Coimbrã marca o momento em que a geração jovem portuguesa rompe com o passado e declara: queremos uma literatura que olhe para a realidade, que critique a sociedade, que use a razão — não que fuja para fantasias românticas.</p>
+  </div>
+
+  <h3 class="reveal">1870 — As Conferências do Cassino Lisbonense</h3>
+  <p class="reveal">Cinco anos depois, os mesmos jovens que discutiram em Coimbra foram a Lisboa e organizaram uma série de conferências públicas num cassino da cidade. O objetivo era claro: <strong>reformar a sociedade portuguesa</strong>, discutindo ciência, política, socialismo e literatura.</p>
+
+  <div class="extra-box reveal">
+    <div class="extra-tag">⚡ Conteúdo Extra</div>
+    <p>O governo português censurou as conferências depois de apenas algumas sessões! A polícia fechou o cassino e proibiu os eventos. A conferência de Eça de Queirós sobre o realismo no romance nem chegou a acontecer. Isso mostra como as ideias eram consideradas perigosas pelas autoridades da época.</p>
+  </div>
+
+  <p class="reveal">Participaram das conferências nomes como Antero de Quental, Eça de Queirós, Adolfo Coelho e Oliveira Martins. Eram jovens intelectuais que ficaram conhecidos como a <strong>Geração de 70</strong> — a geração que fundou o Realismo português.</p>
+</section>
+
+<!-- SECTION 4: AUTORES -->
+<section id="autores">
+  <span class="section-tag reveal">Parte IV — Os Grandes Nomes</span>
+  <h2 class="reveal">Os Autores do Realismo Português</h2>
+  <div class="section-line reveal"></div>
+
+  <p class="reveal">O Realismo português se divide em dois grandes gêneros literários, cada um com seu grande representante:</p>
+
+  <div class="two-col reveal" style="margin-top:2rem;">
+    <div class="card" style="text-align:center;border:2px solid rgba(201,164,62,0.3);padding:2.5rem 2rem;">
+      <div style="font-size:3rem;margin-bottom:1rem;">📜</div>
+      <div style="font-size:0.8rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);margin-bottom:0.5rem;">Prosa</div>
+      <h3 style="color:var(--gold-light);font-size:1.6rem;margin:0 0 1rem;">Eça de Queirós</h3>
+      <p style="font-size:0.9rem;color:var(--muted);">O maior prosador realista português. Romances que criticam ferozmente a sociedade burguesa, a Igreja e a hipocrisia da elite.</p>
+      <div class="badge badge-gold" style="margin-top:0.5rem;">O Crime do Padre Amaro, O Primo Basílio</div>
+    </div>
+    <div class="card" style="text-align:center;border:2px solid rgba(90,173,112,0.3);padding:2.5rem 2rem;">
+      <div style="font-size:3rem;margin-bottom:1rem;">🌑</div>
+      <div style="font-size:0.8rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);margin-bottom:0.5rem;">Poesia</div>
+      <h3 style="color:var(--green);font-size:1.6rem;margin:0 0 1rem;">Antero de Quental</h3>
+      <p style="font-size:0.9rem;color:var(--muted);">O maior poeta realista português. Sonetos que oscilam entre o engajamento socialista e o mais profundo pessimismo metafísico.</p>
+      <div class="badge badge-green" style="margin-top:0.5rem;">Odes Modernas, Sonetos Completos</div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 5: ANTERO DE QUENTAL -->
+<section id="antero">
+  <span class="section-tag reveal">Parte V — O Poeta do Apocalipse</span>
+  <h2 class="reveal">Antero de Quental</h2>
+  <div class="section-line reveal"></div>
+
+  <div class="highlight-box reveal">
+    <p style="font-size:1.05rem;font-style:italic;color:var(--gold-light);">"O poeta do Apocalipse" — assim foi chamado por seus contemporâneos. Um homem que viveu em conflito permanente entre a esperança e o desespero.</p>
+  </div>
+
+  <p class="reveal">Antero de Quental (1842–1891) foi um dos maiores intelectuais portugueses do século XIX. Nascido nos Açores, foi para Coimbra estudar e lá se transformou no líder da geração que revolucionou a literatura portuguesa.</p>
+
+  <h3 class="reveal">1. A perfeição no soneto — comparável a Camões e Bocage</h3>
+  <p class="reveal">Antero escreveu exclusivamente <strong>sonetos</strong> — a forma poética mais rigorosa da tradição ocidental (14 versos divididos em duas quadras e dois tercetos). Sua maestria técnica o coloca ao lado de Camões (o maior poeta da língua portuguesa) e Bocage (o mais habilidoso sonetista do século XVIII).</p>
+
+  <div class="extra-box reveal">
+    <div class="extra-tag">⚡ Conteúdo Extra — o que é um soneto?</div>
+    <p>O <strong>soneto</strong> é uma forma poética com estrutura rígida: 14 versos, divididos em dois grupos de 4 (quadras) e dois grupos de 3 (tercetos). O desafio é dizer algo profundo dentro dessa camisa de força formal. É como fazer uma obra-prima dentro de um quadro minúsculo — requer virtuosismo técnico absoluto.</p>
+    <p>Antero usa a rigidez do soneto para dar força às suas ideias filosóficas — a forma contida contrasta com o conteúdo explosivo.</p>
+  </div>
+
+  <h3 class="reveal">2. A ambiguidade — as duas faces do poeta</h3>
+  <p class="reveal">O que torna Antero tão fascinante é que sua obra é <strong>contraditória</strong> — e isso não é um defeito, é a sua marca. Ele viveu um conflito interno permanente, e esse conflito gerou dois tipos de poesia radicalmente diferentes:</p>
+
+  <div class="face-grid reveal">
+    <div class="face-card face-dark">
+      <div class="face-label">🌑 Face Escura</div>
+      <h4 style="font-size:1.05rem;margin-bottom:1rem;">Poesia Metafísica</h4>
+      <p style="font-size:0.92rem;margin-bottom:0.8rem;color:#d0b0b0;">Influenciada diretamente por <strong>Schopenhauer</strong>. Fala de:</p>
+      <ul style="font-size:0.88rem;color:var(--muted);padding-left:1.2rem;line-height:2;">
+        <li>Pessimismo e dor de existir</li>
+        <li>Morte e niilismo</li>
+        <li>Descrença total no mundo</li>
+        <li>A vida como sofrimento</li>
+        <li>Libertação pelo nirvana</li>
+      </ul>
+    </div>
+    <div class="face-card face-light">
+      <div class="face-label">☀️ Face Luminosa</div>
+      <h4 style="font-size:1.05rem;margin-bottom:1rem;">Poesia Socialista</h4>
+      <p style="font-size:0.92rem;margin-bottom:0.8rem;color:#b0d0b8;">Influenciada por Marx e Proudhon. Fala de:</p>
+      <ul style="font-size:0.88rem;color:var(--muted);padding-left:1.2rem;line-height:2;">
+        <li>Otimismo e esperança</li>
+        <li>Engajamento político e social</li>
+        <li>Valorização da razão</li>
+        <li>Luta pela liberdade</li>
+        <li>Crença num mundo melhor</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- SVG: As duas faces -->
+  <div class="reveal" style="margin:2.5rem 0;">
+    <svg width="100%" viewBox="0 0 680 200" role="img">
+      <title>As duas faces de Antero de Quental</title>
+      <desc>Diagrama mostrando a tensão entre a face escura (metafísica/pessimista) e a face luminosa (socialista/otimista) no poeta</desc>
+      <defs>
+        <marker id="arr2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </marker>
+      </defs>
+      <!-- Left: Face Escura -->
+      <rect x="20" y="40" width="220" height="120" rx="12" fill="rgba(100,40,40,0.3)" stroke="rgba(201,90,90,0.4)" stroke-width="1"/>
+      <text x="130" y="76" text-anchor="middle" font-family="Palatino,serif" font-size="14" fill="#c95a5a">Face Escura</text>
+      <text x="130" y="100" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="12" fill="#a07070">Pessimismo · Dor · Morte</text>
+      <text x="130" y="120" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="11" fill="#806060">Schopenhauer · Niilismo</text>
+      <text x="130" y="140" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="11" fill="#806060">Poesia metafísica</text>
+
+      <!-- Center: Antero -->
+      <rect x="278" y="60" width="124" height="80" rx="10" fill="rgba(201,164,62,0.15)" stroke="rgba(201,164,62,0.5)" stroke-width="1.5"/>
+      <text x="340" y="97" text-anchor="middle" font-family="Palatino,serif" font-size="14" fill="#c9a43e">Antero</text>
+      <text x="340" y="117" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="11" fill="#a08030">de Quental</text>
+
+      <!-- Arrows -->
+      <line x1="240" y1="100" x2="278" y2="100" stroke="#c95a5a" stroke-width="1.5" marker-end="url(#arr2)" opacity="0.7"/>
+      <line x1="402" y1="100" x2="440" y2="100" stroke="#5aad70" stroke-width="1.5" marker-end="url(#arr2)" opacity="0.7"/>
+
+      <!-- Right: Face Luminosa -->
+      <rect x="440" y="40" width="220" height="120" rx="12" fill="rgba(40,100,60,0.3)" stroke="rgba(90,173,112,0.4)" stroke-width="1"/>
+      <text x="550" y="76" text-anchor="middle" font-family="Palatino,serif" font-size="14" fill="#5aad70">Face Luminosa</text>
+      <text x="550" y="100" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="12" fill="#70a080">Otimismo · Esperança · Luta</text>
+      <text x="550" y="120" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="11" fill="#608060">Socialismo · Racionalismo</text>
+      <text x="550" y="140" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="11" fill="#608060">Poesia de engajamento</text>
+
+      <!-- Tension label -->
+      <text x="340" y="185" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="11" fill="#605850">← tensão permanente na obra de Antero →</text>
+    </svg>
+  </div>
+
+  <div class="extra-box reveal">
+    <div class="extra-tag">⚡ Conteúdo Extra — a tragédia do poeta</div>
+    <p>Antero de Quental <strong>tirou a própria vida em 1891</strong>, com 49 anos, nos Açores. Em suas últimas décadas, a face escura prevaleceu: a depressão, o niilismo e o pessimismo schopenhauriano o consumiram. É uma das histórias mais dramáticas da literatura portuguesa — um homem que escreveu sobre o desejo de liberdade e de um mundo melhor, mas não conseguiu encontrar esse mundo dentro de si mesmo.</p>
+  </div>
+</section>
+
+<!-- SECTION 6: HINO À RAZÃO -->
+<section id="hino">
+  <span class="section-tag reveal">Parte VI — A Face Luminosa</span>
+  <h2 class="reveal">A Poesia Realista Propriamente Dita</h2>
+  <div class="section-line reveal"></div>
+
+  <p class="reveal">Vamos agora ler e analisar um dos poemas mais representativos da <strong>face luminosa</strong> de Antero — o <em>Hino à Razão</em>. Nele, o poeta celebra a razão como força de transformação social.</p>
+
+  <div class="poem-wrapper reveal">
+    <div>
+      <div class="poem-box">
+        <div class="poem-title">☀️ Hino à Razão — Antero de Quental</div>
+        <div class="poem-stanza">
+          <p>Razão, irmã do Amor e da Justiça,<br>
+          Mais uma vez escuta a minha prece,<br>
+          É a voz dum coração que te apetece,<br>
+          Duma alma livre, só a ti submissa.</p>
+        </div>
+        <div class="poem-stanza">
+          <p>Por ti é que a poeira movediça<br>
+          De astros e sóis e mundos permanece;<br>
+          E é por ti que a virtude prevalece,<br>
+          E a flor do heroísmo medra e viça.</p>
+        </div>
+        <div class="poem-stanza">
+          <p>Por ti, na arena trágica, as nações<br>
+          Buscam a liberdade, entre clarões;<br>
+          E os que olham o futuro e cismam, mudos,</p>
+        </div>
+        <div class="poem-stanza">
+          <p>Por ti, podem sofrer e não se abatem,<br>
+          Mãe de filhos robustos, que combatem<br>
+          Tendo o teu nome escrito em seus escudos!</p>
+        </div>
+      </div>
+    </div>
+    <div class="analysis-box">
+      <h4>📋 Aspectos relevantes da análise</h4>
+      <div class="analysis-item">
+        <div class="analysis-dot" style="background:var(--green);"></div>
+        <p><strong>Valorização da razão — racionalismo.</strong> O eu lírico se dirige à Razão como se ela fosse uma divindade. Não a Deus — mas à Razão. Isso é uma virada radical no pensamento da época.</p>
+      </div>
+      <div class="analysis-item">
+        <div class="analysis-dot" style="background:var(--green);"></div>
+        <p><strong>Poesia de engajamento — olhar socialista.</strong> O poema fala de nações que lutam pela liberdade. Antero era socialista e acreditava na luta coletiva por um mundo mais justo.</p>
+      </div>
+      <div class="analysis-item">
+        <div class="analysis-dot" style="background:var(--green);"></div>
+        <p><strong>Olhar otimista.</strong> Crença genuína que o mundo pode ser melhor através da luta social. A razão é a "mãe de filhos robustos que combatem" — metáfora do intelectual engajado.</p>
+      </div>
+      <div class="analysis-item">
+        <div class="analysis-dot" style="background:var(--green);"></div>
+        <p><strong>Face luminosa.</strong> Tensão entre o idealismo filosófico e político e as teorias socialistas — mas o resultado aqui é esperançoso.</p>
+      </div>
+      <div class="analysis-item">
+        <div class="analysis-dot" style="background:var(--gold);"></div>
+        <p><strong>Forma: soneto.</strong> Estrutura clássica e rigorosa — dois quartetos + dois tercetos. A rigidez da forma contrasta com o conteúdo revolucionário.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card reveal" style="margin-top:1.5rem;">
+    <div class="card-title">🔍 Lendo o poema linha a linha</div>
+    <p><strong>"Razão, irmã do Amor e da Justiça"</strong> — Antero eleva a Razão ao mesmo nível do Amor e da Justiça. Não é uma fria racionalidade matemática — é uma força moral e afetiva.</p>
+    <p><strong>"Duma alma livre, só a ti submissa"</strong> — o poeta se declara livre de tudo exceto da Razão. Uma declaração de independência espiritual — sem Deus, sem Rei, sem tradição.</p>
+    <p><strong>"Por ti, na arena trágica, as nações / Buscam a liberdade"</strong> — a história é uma "arena trágica", mas a luta pela liberdade tem sentido e direção quando guiada pela Razão.</p>
+    <p><strong>"Tendo o teu nome escrito em seus escudos"</strong> — imagem guerreira, épica. Os soldados do futuro carregam não a bandeira de um Rei, mas o nome da Razão.</p>
+  </div>
+</section>
+
+<!-- SECTION 7: SÓ MALES -->
+<section id="males">
+  <span class="section-tag reveal">Parte VII — A Face Escura</span>
+  <h2 class="reveal">A Poesia Metafísica</h2>
+  <div class="section-line reveal"></div>
+
+  <div class="highlight-box reveal">
+    <p style="font-style:italic;color:var(--muted);">"Da luta que então combati, durante 5 ou 6 anos, com meu próprio pensamento e o meu próprio sentimento que me arrastavam para um pessimismo vácuo e para o desespero, dão testemunho... muitas poesias."</p>
+    <p style="font-size:0.88rem;color:var(--muted);margin:0;">— Antero de Quental, sobre si mesmo</p>
+  </div>
+
+  <p class="reveal">Agora lemos a <strong>face escura</strong>. O soneto <em>Só Males São Reais, Só Dor Existe</em> é um mergulho na filosofia de Schopenhauer — a vida como sofrimento, a felicidade como ilusão, o niilismo como conclusão.</p>
+
+  <div class="poem-wrapper reveal">
+    <div>
+      <div class="poem-box" style="border-left-color:var(--red);">
+        <div class="poem-title" style="color:var(--red);">🌑 Só Males São Reais, Só Dor Existe — Antero de Quental</div>
+        <div class="poem-stanza">
+          <p>Só males são reais, só dor existe:<br>
+          Prazeres só os gera a fantasia;<br>
+          Em nada, um imaginar, o bem consiste,<br>
+          Anda o mal em cada hora e instante e dia.</p>
+        </div>
+        <div class="poem-stanza">
+          <p>Se buscamos o que é, o que devia<br>
+          Por natureza ser não nos assiste;<br>
+          Se fiamos num bem, que a mente cria,<br>
+          Que outro remédio há senão ser triste?</p>
+        </div>
+        <div class="poem-stanza">
+          <p>Oh! Quem tanto pudera que passasse<br>
+          A vida em sonhos só. E nada vira...<br>
+          Mas, no que se não vê, labor perdido!</p>
+        </div>
+        <div class="poem-stanza">
+          <p>Quem fora tão ditoso que olvidasse...<br>
+          Mas nem seu mal com ele então dormira,<br>
+          Que sempre o mal pior é ter nascido!</p>
+        </div>
+      </div>
+    </div>
+    <div class="analysis-box">
+      <h4>📋 Aspectos relevantes da análise</h4>
+      <div class="analysis-item">
+        <div class="analysis-dot" style="background:var(--red);"></div>
+        <p><strong>Valorização da emoção.</strong> Ao contrário do poema anterior, aqui não há razão triunfante — há sentimento puro, dor, angústia existencial.</p>
+      </div>
+      <div class="analysis-item">
+        <div class="analysis-dot" style="background:var(--red);"></div>
+        <p><strong>Dor de existir — olhar de Schopenhauer.</strong> "Só males são reais" é quase uma transcrição da filosofia de Schopenhauer: só o sofrimento é concreto, o prazer é ilusório.</p>
+      </div>
+      <div class="analysis-item">
+        <div class="analysis-dot" style="background:var(--red);"></div>
+        <p><strong>Pessimismo, evasão e morte.</strong> O poeta deseja escapar da realidade ("a vida em sonhos só"), mas sabe que é impossível. Desejo de morte implícito.</p>
+      </div>
+      <div class="analysis-item">
+        <div class="analysis-dot" style="background:var(--red);"></div>
+        <p><strong>Niilismo — descrença total.</strong> O verso final — "sempre o mal pior é ter nascido" — é a mais completa expressão do niilismo: a existência em si é um erro.</p>
+      </div>
+      <div class="analysis-item">
+        <div class="analysis-dot" style="background:var(--muted);"></div>
+        <p><strong>Liberdade existencial.</strong> O poema também reflete o desejo de uma liberdade impossível — escapar de si mesmo, esquecer, não existir.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card reveal" style="margin-top:1.5rem;">
+    <div class="card-title">🔍 Lendo o poema linha a linha</div>
+    <p><strong>"Só males são reais, só dor existe"</strong> — abertura brutal. Não há dúvida nem suavização. O sofrimento é a única realidade sólida.</p>
+    <p><strong>"Prazeres só os gera a fantasia"</strong> — a felicidade não existe de fato, é produto da imaginação. Eco direto de Schopenhauer: prazeres são pausas ilusórias na dor.</p>
+    <p><strong>"Que outro remédio há senão ser triste?"</strong> — pergunta retórica devastadora. Não há saída — a tristeza é a única resposta racional à condição humana.</p>
+    <p><strong>"Que sempre o mal pior é ter nascido!"</strong> — o verso mais ousado de todo o soneto. A existência em si é o maior dos males. Niilismo puro. Lembrança do pensador grego Sileno: "o melhor para o homem é não ter nascido".</p>
+  </div>
+</section>
+
+<!-- SECTION 8: COMPARAÇÃO -->
+<section id="comparacao">
+  <span class="section-tag reveal">Parte VIII — Exercício de Análise</span>
+  <h2 class="reveal">Comparando as Duas Faces: A Um Poeta vs. Nirvana</h2>
+  <div class="section-line reveal"></div>
+
+  <p class="reveal">Agora você vai exercitar o que aprendeu. Leia os dois sonetos abaixo e observe as diferenças quanto ao <strong>olhar do eu lírico</strong> — ou seja, como o poeta (que fala no poema) vê o mundo e age diante dele.</p>
+
+  <div class="compare-grid reveal">
+    <div>
+      <div class="compare-col-head" style="background:rgba(90,173,112,0.3);color:var(--green);">Texto 1 — A Um Poeta</div>
+      <div class="compare-cell poem-box" style="border-radius:0 0 10px 10px;border-left:3px solid var(--green);">
+        <div class="poem-stanza">
+          <p>Tu, que dormes, espírito sereno,<br>
+          Posto à sombra dos cedros seculares,<br>
+          Como um levita à sombra dos altares,<br>
+          Longe da luta e do fragor terreno,</p>
+        </div>
+        <div class="poem-stanza">
+          <p>Acorda! é tempo! O sol, já alto e pleno,<br>
+          Afugentou as larvas tumulares...<br>
+          Para surgir do seio desses mares,<br>
+          Um mundo novo espera só um aceno...</p>
+        </div>
+        <div class="poem-stanza">
+          <p>Escuta! é a grande voz das multidões!<br>
+          São teus irmãos, que se erguem! São canções...<br>
+          Mas de guerra... e são vozes de rebate!</p>
+        </div>
+        <div class="poem-stanza">
+          <p>Ergue-te, pois, soldado do Futuro,<br>
+          E dos raios de luz do sonho puro,<br>
+          Sonhador, faze espada de combate.</p>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="compare-col-head" style="background:rgba(100,80,150,0.3);color:#a090d0;">Texto 2 — Nirvana</div>
+      <div class="compare-cell poem-box" style="border-radius:0 0 10px 10px;border-left:3px solid #a090d0;">
+        <div class="poem-stanza">
+          <p>Para além do Universo luminoso,<br>
+          Cheio de formas, de rumor, de lida,<br>
+          De forças, de desejos e de vida,<br>
+          Abre-se como um vácuo tenebroso.</p>
+        </div>
+        <div class="poem-stanza">
+          <p>A onda desse mar tumultuoso<br>
+          Vem ali expirar, esmaecida…<br>
+          Numa imobilidade indefinida<br>
+          Termina ali o ser, inerte, ocioso...</p>
+        </div>
+        <div class="poem-stanza">
+          <p>E quando o pensamento, assim absorto,<br>
+          Emerge a custo desse mundo morto<br>
+          E torna a olhar as coisas naturais,</p>
+        </div>
+        <div class="poem-stanza">
+          <p>À bela luz da vida, ampla, infinita,<br>
+          Só vê com tédio, em tudo quanto fita,<br>
+          A ilusão e o vazio universais.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card reveal" style="margin-top:1.5rem;">
+    <div class="card-title">💡 Obs. importante sobre o Nirvana</div>
+    <p>O Nirvana não deve ser visto apenas pelo seu lado negativo, pois aponta também para a paz — o estado budista de extinção do desejo. O Nirvana é o equivalente ao céu do budismo: os budistas o desejam assim como os cristãos desejam o paraíso. Mas no poema, o eu lírico olha para o mundo depois do Nirvana e ainda assim só vê ilusão e vazio — o pessimismo persiste mesmo na paz.</p>
+  </div>
+
+  <h3 class="reveal">Análise comparativa: as diferenças fundamentais</h3>
+  <div class="two-col reveal" style="margin-top:1rem;">
+    <div>
+      <div class="card" style="border-top:3px solid var(--green);">
+        <div class="card-title" style="color:var(--green);">A Um Poeta — Face Luminosa</div>
+        <ul style="font-size:0.9rem;padding-left:1.2rem;line-height:2;color:var(--muted);">
+          <li>Eu lírico ativo, que convoca à ação</li>
+          <li>Tom imperativo: "Acorda!", "Ergue-te!"</li>
+          <li>Crença num "mundo novo"</li>
+          <li>A luta tem sentido — há esperança</li>
+          <li>O sonho vira "espada de combate"</li>
+          <li>Poesia socialista e engajada</li>
+        </ul>
+      </div>
+    </div>
+    <div>
+      <div class="card" style="border-top:3px solid #a090d0;">
+        <div class="card-title" style="color:#a090d0;">Nirvana — Face Escura / Metafísica</div>
+        <ul style="font-size:0.9rem;padding-left:1.2rem;line-height:2;color:var(--muted);">
+          <li>Eu lírico contemplativo, passivo</li>
+          <li>Tom descritivo e meditativo</li>
+          <li>O além é um "vácuo tenebroso"</li>
+          <li>A vida é ilusão e vazio</li>
+          <li>O pensamento retorna ao tédio</li>
+          <li>Poesia metafísica e schopenhauriana</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quiz Box -->
+  <div class="quiz-box reveal">
+    <h4>🎯 Questões para fixar — treine seu olhar analítico</h4>
+    <div class="quiz-q"><span>1.</span> Em <em>A Um Poeta</em>, para quem o eu lírico fala? Qual é sua intenção ao se dirigir a esse interlocutor?</div>
+    <div class="quiz-q"><span>2.</span> Em <em>Nirvana</em>, qual a sensação que o eu lírico experimenta ao olhar o mundo? Isso se aproxima da face escura ou luminosa de Antero?</div>
+    <div class="quiz-q"><span>3.</span> Compare o verso "Ergue-te, pois, soldado do Futuro" com "Só vê com tédio, em tudo quanto fita, / A ilusão e o vazio universais." Que visão de mundo cada um transmite?</div>
+    <div class="quiz-q"><span>4.</span> Como a filosofia de Schopenhauer aparece no poema <em>Nirvana</em>? Identifique ao menos dois elementos filosóficos estudados.</div>
+    <div class="quiz-q"><span>5.</span> Por que Antero escreve poemas tão diferentes entre si? O que isso diz sobre a personalidade e o pensamento do poeta?</div>
+  </div>
+</section>
+
+<!-- SECTION 9: EÇA DE QUEIRÓS -->
+<section id="eca">
+  <span class="section-tag reveal">Parte IX — A Prosa Realista</span>
+  <h2 class="reveal">Eça de Queirós: O Grande Prosador</h2>
+  <div class="section-line reveal"></div>
+
+  <div class="highlight-box reveal">
+    <p style="font-style:italic;color:var(--gold-light);font-size:1.05rem;">"A arte pela arte me parece uma futilidade: a arte pela ciência, a arte pela moral, a arte pelo progresso social, eis o que basta."</p>
+    <p style="font-size:0.88rem;color:var(--muted);margin:0;">— Eça de Queirós</p>
+  </div>
+
+  <p class="reveal">Se Antero foi o grande poeta realista, <strong>Eça de Queirós</strong> (1845–1900) foi o grande prosador — o romancista que colocou Portugal no mapa da literatura europeia e que retratou a sociedade portuguesa com um bisturi de cirurgião.</p>
+
+  <div class="three-col reveal">
+    <div class="card" style="border-left:3px solid var(--gold);">
+      <div class="card-title">✍️ Estilo</div>
+      <p style="font-size:0.9rem;">Prosa elegante, irônica e precisa. Eça sabia satirizar com maestria — tornava o leitor cúmplice de sua crítica através do humor.</p>
+    </div>
+    <div class="card" style="border-left:3px solid var(--red);">
+      <div class="card-title">🎯 Alvo principal</div>
+      <p style="font-size:0.9rem;">A burguesia portuguesa, a Igreja Católica, a hipocrisia moral da elite, o romantismo vazio das mulheres educadas para não pensar.</p>
+    </div>
+    <div class="card" style="border-left:3px solid var(--green);">
+      <div class="card-title">📚 Obras principais</div>
+      <p style="font-size:0.9rem;"><em>O Crime do Padre Amaro</em> (1875), <em>O Primo Basílio</em> (1878), <em>Os Maias</em> (1888) — clássicos da literatura de língua portuguesa.</p>
+    </div>
+  </div>
+
+  <div class="extra-box reveal">
+    <div class="extra-tag">⚡ Conteúdo Extra — O Crime do Padre Amaro</div>
+    <p>O primeiro romance realista português, publicado em 1875, escandalizou Portugal. A história de um padre que seduz uma jovem devota dentro de uma paróquia era uma provocação direta à Igreja Católica. Eça queria mostrar a hipocrisia das instituições — e a Igreja era a mais poderosa delas.</p>
+    <p>O romance foi considerado pornográfico por muitos e gerou um enorme debate público. Mas era exatamente isso que Eça queria: fazer a sociedade se olhar no espelho e se envergonhar do que via.</p>
+  </div>
+
+  <h3 class="reveal">Características da prosa realista de Eça</h3>
+  <div class="two-col reveal">
+    <div>
+      <div class="concept-row">
+        <div class="concept-icon" style="background:rgba(201,164,62,0.2);border:1px solid rgba(201,164,62,0.4);">🔬</div>
+        <div class="concept-text">
+          <h4>Objetividade científica</h4>
+          <p>Influenciado pelo método científico, Eça "observa" a sociedade como um cientista — sem julgamento explícito, mas com uma ironia que condena tudo.</p>
+        </div>
+      </div>
+      <div class="concept-row">
+        <div class="concept-icon" style="background:rgba(90,173,112,0.2);border:1px solid rgba(90,173,112,0.4);">🏙️</div>
+        <div class="concept-text">
+          <h4>Ambiente urbano e burguês</h4>
+          <p>Diferente do Romantismo, que fugia para a natureza ou o passado, Eça ambienta seus romances na cidade, nas casas burguesas, nas igrejas e salões.</p>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="concept-row">
+        <div class="concept-icon" style="background:rgba(201,90,90,0.2);border:1px solid rgba(201,90,90,0.4);">😈</div>
+        <div class="concept-text">
+          <h4>Personagens com defeitos reais</h4>
+          <p>Sem heróis perfeitos. As personagens têm fraquezas, desejos, contradições — são retrato da sociedade, não idealizações.</p>
+        </div>
+      </div>
+      <div class="concept-row">
+        <div class="concept-icon" style="background:rgba(100,100,180,0.2);border:1px solid rgba(100,100,180,0.4);">⚡</div>
+        <div class="concept-text">
+          <h4>Crítica social e anticlerical</h4>
+          <p>Eça não tem medo de atacar a Igreja, a burguesia, o governo. A literatura para ele é uma arma de transformação social — assim como para Antero.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION: RESUMO GERAL -->
+<section>
+  <span class="section-tag reveal">Síntese — Tudo que você precisa saber</span>
+  <h2 class="reveal">Mapa do Realismo Português</h2>
+  <div class="section-line reveal"></div>
+
+  <!-- Big diagram -->
+  <div class="reveal">
+    <svg width="100%" viewBox="0 0 680 420" role="img">
+      <title>Mapa do Realismo Português</title>
+      <desc>Diagrama síntese mostrando as origens filosóficas, o contexto histórico, os autores e as principais obras do Realismo em Portugal</desc>
+      <defs>
+        <marker id="arr3" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </marker>
+      </defs>
+
+      <!-- Row 1: Sources -->
+      <rect x="30" y="30" width="140" height="56" rx="8" fill="rgba(100,80,180,0.2)" stroke="rgba(120,100,200,0.5)" stroke-width="0.5"/>
+      <text x="100" y="52" text-anchor="middle" dominant-baseline="central" font-family="-apple-system,sans-serif" font-size="12" fill="#a090d0">Schopenhauer</text>
+      <text x="100" y="70" text-anchor="middle" dominant-baseline="central" font-family="-apple-system,sans-serif" font-size="10" fill="#806090">Pessimismo / Vontade</text>
+
+      <rect x="200" y="30" width="120" height="56" rx="8" fill="rgba(80,80,80,0.3)" stroke="rgba(120,120,120,0.4)" stroke-width="0.5"/>
+      <text x="260" y="52" text-anchor="middle" dominant-baseline="central" font-family="-apple-system,sans-serif" font-size="12" fill="#c0c0c0">Marx / Proudhon</text>
+      <text x="260" y="70" text-anchor="middle" dominant-baseline="central" font-family="-apple-system,sans-serif" font-size="10" fill="#909090">Socialismo</text>
+
+      <rect x="350" y="30" width="130" height="56" rx="8" fill="rgba(60,80,120,0.3)" stroke="rgba(80,110,180,0.4)" stroke-width="0.5"/>
+      <text x="415" y="52" text-anchor="middle" dominant-baseline="central" font-family="-apple-system,sans-serif" font-size="12" fill="#90a8d8">Comte / Darwin</text>
+      <text x="415" y="70" text-anchor="middle" dominant-baseline="central" font-family="-apple-system,sans-serif" font-size="10" fill="#7090b0">Positivismo / Ciência</text>
+
+      <rect x="508" y="30" width="140" height="56" rx="8" fill="rgba(80,60,40,0.3)" stroke="rgba(160,120,80,0.4)" stroke-width="0.5"/>
+      <text x="578" y="52" text-anchor="middle" dominant-baseline="central" font-family="-apple-system,sans-serif" font-size="12" fill="#c0a070">Portugal atrasado</text>
+      <text x="578" y="70" text-anchor="middle" dominant-baseline="central" font-family="-apple-system,sans-serif" font-size="10" fill="#907050">Estagnação / Igreja</text>
+
+      <!-- Arrows to center -->
+      <line x1="100" y1="86" x2="290" y2="168" stroke="#a090d0" stroke-width="1" marker-end="url(#arr3)" opacity="0.6"/>
+      <line x1="260" y1="86" x2="320" y2="168" stroke="#b0b0b0" stroke-width="1" marker-end="url(#arr3)" opacity="0.5"/>
+      <line x1="415" y1="86" x2="370" y2="168" stroke="#90a8d8" stroke-width="1" marker-end="url(#arr3)" opacity="0.5"/>
+      <line x1="578" y1="86" x2="420" y2="168" stroke="#c0a070" stroke-width="1" marker-end="url(#arr3)" opacity="0.5"/>
+
+      <!-- Center: Realismo Português -->
+      <rect x="256" y="168" width="168" height="56" rx="10" fill="rgba(201,164,62,0.2)" stroke="rgba(201,164,62,0.6)" stroke-width="1.5"/>
+      <text x="340" y="190" text-anchor="middle" dominant-baseline="central" font-family="Palatino,serif" font-size="14" fill="#c9a43e">Realismo Português</text>
+      <text x="340" y="210" text-anchor="middle" dominant-baseline="central" font-family="-apple-system,sans-serif" font-size="10" fill="#a08030">Geração de 70 · 1865–1900</text>
+
+      <!-- Arrows down -->
+      <line x1="290" y1="224" x2="160" y2="300" stroke="#5aad70" stroke-width="1" marker-end="url(#arr3)" opacity="0.7"/>
+      <line x1="390" y1="224" x2="510" y2="300" stroke="#c9a43e" stroke-width="1" marker-end="url(#arr3)" opacity="0.7"/>
+
+      <!-- Antero -->
+      <rect x="60" y="300" width="190" height="80" rx="10" fill="rgba(90,173,112,0.15)" stroke="rgba(90,173,112,0.4)" stroke-width="1"/>
+      <text x="155" y="325" text-anchor="middle" dominant-baseline="central" font-family="Palatino,serif" font-size="13" fill="#5aad70">Antero de Quental</text>
+      <text x="155" y="344" text-anchor="middle" dominant-baseline="central" font-family="-apple-system,sans-serif" font-size="10" fill="#408060">POESIA · Sonetos</text>
+      <text x="155" y="362" text-anchor="middle" dominant-baseline="central" font-family="-apple-system,sans-serif" font-size="10" fill="#408060">Face escura + face luminosa</text>
+
+      <!-- Eça -->
+      <rect x="420" y="300" width="200" height="80" rx="10" fill="rgba(201,164,62,0.12)" stroke="rgba(201,164,62,0.35)" stroke-width="1"/>
+      <text x="520" y="325" text-anchor="middle" dominant-baseline="central" font-family="Palatino,serif" font-size="13" fill="#c9a43e">Eça de Queirós</text>
+      <text x="520" y="344" text-anchor="middle" dominant-baseline="central" font-family="-apple-system,sans-serif" font-size="10" fill="#a08030">PROSA · Romances</text>
+      <text x="520" y="362" text-anchor="middle" dominant-baseline="central" font-family="-apple-system,sans-serif" font-size="10" fill="#a08030">Crítica social e anticlerical</text>
+
+      <!-- Questão Coimbrã box -->
+      <rect x="254" y="300" width="172" height="48" rx="8" fill="rgba(60,40,20,0.5)" stroke="rgba(160,120,60,0.4)" stroke-width="0.5"/>
+      <text x="340" y="318" text-anchor="middle" dominant-baseline="central" font-family="-apple-system,sans-serif" font-size="11" fill="#c0a060">1865: Questão Coimbrã</text>
+      <text x="340" y="336" text-anchor="middle" dominant-baseline="central" font-family="-apple-system,sans-serif" font-size="10" fill="#906040">1870: Cassino Lisbonense</text>
+      <line x1="340" y1="224" x2="340" y2="300" stroke="#c9a43e" stroke-width="1" stroke-dasharray="4 3" opacity="0.5"/>
+
+      <text x="340" y="400" text-anchor="middle" font-family="-apple-system,sans-serif" font-size="10" fill="#605850">Mapa síntese do Realismo Português</text>
+    </svg>
+  </div>
+
+  <div class="card reveal" style="margin-top:2rem;">
+    <div class="card-title">📝 Resumo do que estudamos hoje</div>
+    <div class="timeline" style="margin:1rem 0 0;">
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-title" style="font-size:1rem;"><strong>Schopenhauer</strong> — a base filosófica do pessimismo realista</div>
+        <div class="tl-desc">Vida = sofrimento. Arte = alívio breve. Vontade = mal maior. Niilismo. Nirvana.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-title" style="font-size:1rem;"><strong>Contexto português</strong> — atraso, estagnação, Igreja como obstáculo</div>
+        <div class="tl-desc">Portugal era o "atraso" da Europa. A elite intelectual se revoltou e buscou mudança.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-title" style="font-size:1rem;"><strong>A Questão Coimbrã (1865)</strong> — o estopim</div>
+        <div class="tl-desc">Castilho (romântico) vs. Antero (realista). Uma briga literária que mudou a história.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-title" style="font-size:1rem;"><strong>Antero de Quental</strong> — as duas faces</div>
+        <div class="tl-desc">Face escura: pessimismo schopenhauriano. Face luminosa: engajamento socialista. Mestre do soneto.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-title" style="font-size:1rem;"><strong>Eça de Queirós</strong> — o bisturi da prosa</div>
+        <div class="tl-desc">Romance realista. Crítica à Igreja, à burguesia e à hipocrisia social. O maior prosador português.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p style="margin-bottom:0.5rem;">Aula elaborada com base no material de <strong>Realismo em Portugal</strong></p>
+  <p>Conteúdo adicional marcado com ⚡ foi incluído para melhor compreensão do contexto.</p>
+</footer>
+
+<script>
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('revealed'); }
+  });
+}, { threshold: 0.08 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
